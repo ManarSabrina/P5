@@ -1,3 +1,4 @@
+// APPEL DE L'API
 function api() {
     fetch("http://localhost:3000/api/products")
 
@@ -18,57 +19,23 @@ function api() {
 
 api();
 
-
+// CREATION DES CARDS PRODUIT
 function creatCards (values) {
     console.log(values);
 
     let section = document.getElementById("items");
 
     for (let i = 0; i < values.length; i++) {
-        // for (let i of values) {} ?
-
         section.innerHTML += 
-        `<a href="./product.html?${values[i]._id}">
+        `<a href="./product.html?id=${values[i]._id}">
             <article>
                 <img src="${values[i].imageUrl}" alt="${values[i].altTxt}">
                 <h3 class="productName">${values[i].name}</h3>
                 <p class="productDescription">${values[i].description}</p>
             </article>
-        </a>`;
-        
+        </a>`;  
     }
 }
-
-
-
-/*const ap = document.createElement('ap');
-let section = document.getElementById('items');
-section.appendChild(ap);
-
-
-const article = document.createElement("article");
-a.appendChild(article);
-
-const img = document.createElement("img");
-article.appendChild(img);
-img.setAttribute("src", "./product.html?imageUrl=" + value[0].imageUrl);
-
-const h3 = document.createElement("h3");
-article.appendChild(h3);
-h3.classList.add("name");
-h3.textContent = value[0].name;
-
-const p = document.createElement("p");
-article.appendChild(p);
-p.classList.add("description");
-h3.textContent = value[0].description;
-
-/*const img = document.getElementById('img');
-
-fetch("http://localhost:3000/api/products")
-    .then(res => res.json())
-    .then(data => img.src = data[0].imageUrl) */
-
 
 
 
