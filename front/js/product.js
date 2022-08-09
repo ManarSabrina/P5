@@ -59,40 +59,24 @@ function affichageCaracteristiquesProduit (caracteristiquesProduit)
 // ENVOIE (DE QQ) CARACTERISTIQUES PRODUITS DS LE LOCAL STORAGE
 function envoieCaracteristiquesProduitDsLocalStorage (caracteristiquesProduit) 
 {
-
-    
-    console.log(caracteristiquesProduit);
-    
-
     let btnEnvoiePanier = document.querySelector("#addToCart");
-    console.log(caracteristiquesProduit);
+    console.log(btnEnvoiePanier);
     btnEnvoiePanier.addEventListener("click", (e) => { 
-        console.log(caracteristiquesProduit);
+        console.log(btnEnvoiePanier);
         e.preventDefault();
-        console.log(caracteristiquesProduit);
+        
         // Creer une variable, qui condiendra les cles et valeures present dans le local storage
         let produitsPresentsDansLocalStorage = JSON.parse(localStorage.getItem("produit"));
-        console.log(caracteristiquesProduit);
+        
         let containerCouleurs = document.getElementById("colors");
-        console.log(caracteristiquesProduit);
+        
         //Recuperation des qq caracteristiques produits 
         let breveCaracteristiquesProduit = {
         idProduit: caracteristiquesProduit._id,
-        couleurProduit: `${containerCouleurs.value}`, // ??? Comment sait on que ca a ete selectionné et lequel a ete selectionné ? 
-        nombre: 1, 
+        couleurProduit: `${containerCouleurs.value}`, 
+        nombre: 1
         };
-        console.log(caracteristiquesProduit);
         
-
-        if ( caracteristiquesProduit._id === produitsPresentsDansLocalStorage.idProduit && caracteristiquesProduit.color === produitsPresentsDansLocalStorage.couleurProduit ) 
-        {
-            breveCaracteristiquesProduit.nombre = breveCaracteristiquesProduit.nombre + 1
-        }
-        
-        
-        console.log(breveCaracteristiquesProduit);
-        console.log(breveCaracteristiquesProduit.nombre);
-        console.log(produitsPresentsDansLocalStorage);
 
         // Si il y a des produits dans le local storage
         if (produitsPresentsDansLocalStorage) {
@@ -107,11 +91,27 @@ function envoieCaracteristiquesProduitDsLocalStorage (caracteristiquesProduit)
         localStorage.setItem("produit", JSON.stringify(produitsPresentsDansLocalStorage));
         }
 
+        console.log(produitsPresentsDansLocalStorage);
+        for (let j = 0; j < produitsPresentsDansLocalStorage.length; j++) {
+
+            if (breveCaracteristiquesProduit.idProduit === produitsPresentsDansLocalStorage[j].idProduit && breveCaracteristiquesProduit.couleurProduit === produitsPresentsDansLocalStorage[j].couleurProduit ) 
+            {
+                console.log('Ds la fonction, avant execution - ppdls', produitsPresentsDansLocalStorage[j].idProduit);
+                console.log('Ds la fonction, avant execution', breveCaracteristiquesProduit.nombre);
+
+                breveCaracteristiquesProduit.nombre = breveCaracteristiquesProduit.nombre + 1;
+    
+                console.log('Ds la fonction, apres execution', breveCaracteristiquesProduit.nombre);
+            }
+        }
+
      });
 
     /*Local storage 
     Json > Js = JSON.parse()
     Js > Json = JSON.stringify()*/
 }
+
+console.log(envoieCaracteristiquesProduitDsLocalStorage);
 
 
