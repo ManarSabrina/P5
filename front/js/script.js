@@ -16,7 +16,7 @@ function api() {
     // Une erreur est survenue
     });
 }
-
+ 
 api();
 
 // CREATION DES CARDS PRODUIT
