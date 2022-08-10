@@ -60,9 +60,8 @@ function affichageCaracteristiquesProduit (caracteristiquesProduit)
 function envoieCaracteristiquesProduitDsLocalStorage (caracteristiquesProduit) 
 {
     let btnEnvoiePanier = document.querySelector("#addToCart");
-    console.log(btnEnvoiePanier);
+    
     btnEnvoiePanier.addEventListener("click", (e) => { 
-        console.log(btnEnvoiePanier);
         e.preventDefault();
         
         // Creer une variable, qui condiendra les cles et valeures present dans le local storage
@@ -78,40 +77,49 @@ function envoieCaracteristiquesProduitDsLocalStorage (caracteristiquesProduit)
         };
         
 
+        // Si il n'y a pas de produit
+        if (produitsPresentsDansLocalStorage === []) {
+            console.log('1');
+            produitsPresentsDansLocalStorage = [];
+                produitsPresentsDansLocalStorage.push(breveCaracteristiquesProduit);
+                localStorage.setItem("produit", JSON.stringify(produitsPresentsDansLocalStorage));
+                console.log('2');
+        } 
         // Si il y a des produits dans le local storage
-        if (produitsPresentsDansLocalStorage) {
-        produitsPresentsDansLocalStorage.push(breveCaracteristiquesProduit);
-        localStorage.setItem("produit", JSON.stringify(produitsPresentsDansLocalStorage));
-        
-        }
-        // Si il n'y a de produit 
         else {
-        produitsPresentsDansLocalStorage = [];
-        produitsPresentsDansLocalStorage.push(breveCaracteristiquesProduit);
-        localStorage.setItem("produit", JSON.stringify(produitsPresentsDansLocalStorage));
-        }
+            // Parcourir le local storage pour voir si le produit qu'on souhaite rajouter ne s'y trouve pas deja. 
+            console.log('3');
+            for (let j = 0; j < produitsPresentsDansLocalStorage.length; j++) {
+                console.log('4');
+                // Condistions de comparaison
+                console.log("Condition 1", breveCaracteristiquesProduit.idProduit);
+                console.log("Condition 2", produitsPresentsDansLocalStorage[j].idProduit);
+                console.log("Condition 3", breveCaracteristiquesProduit.couleurProduit);
+                console.log("Condition 4", produitsPresentsDansLocalStorage[j].couleurProduit);
+                if (breveCaracteristiquesProduit.idProduit === produitsPresentsDansLocalStorage[j].idProduit && breveCaracteristiquesProduit.couleurProduit === produitsPresentsDansLocalStorage[j].couleurProduit ) 
+                {
+                    console.log('5');
 
-        console.log(produitsPresentsDansLocalStorage);
-        for (let j = 0; j < produitsPresentsDansLocalStorage.length; j++) {
+                    produitsPresentsDansLocalStorage[j].nombre++, 
+                    localStorage.setItem("produit", JSON.stringify(produitsPresentsDansLocalStorage)),
+                    produitsPresentsDansLocalStorage = JSON.parse(localStorage.getItem("produit"))
 
-            if (breveCaracteristiquesProduit.idProduit === produitsPresentsDansLocalStorage[j].idProduit && breveCaracteristiquesProduit.couleurProduit === produitsPresentsDansLocalStorage[j].couleurProduit ) 
-            {
-                console.log('Ds la fonction, avant execution - ppdls', produitsPresentsDansLocalStorage[j].idProduit);
-                console.log('Ds la fonction, avant execution', breveCaracteristiquesProduit.nombre);
-
-                breveCaracteristiquesProduit.nombre = breveCaracteristiquesProduit.nombre + 1;
+                    /*breveCaracteristiquesProduit.nombre = breveCaracteristiquesProduit.nombre + 1;
+                    
+                    produitsPresentsDansLocalStorage.push(breveCaracteristiquesProduit);
+                    localStorage.setItem("produit", JSON.stringify(produitsPresentsDansLocalStorage));*/
     
-                console.log('Ds la fonction, apres execution', breveCaracteristiquesProduit.nombre);
+                } else {
+                    console.log('6');
+                    produitsPresentsDansLocalStorage.push(breveCaracteristiquesProduit);
+                    localStorage.setItem("produit", JSON.stringify(produitsPresentsDansLocalStorage));
+                    console.log('7');
+                }
             }
         }
-
-     });
-
-    /*Local storage 
-    Json > Js = JSON.parse()
-    Js > Json = JSON.stringify()*/
+    });
 }
 
-console.log(envoieCaracteristiquesProduitDsLocalStorage);
+
 
 
