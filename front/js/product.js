@@ -64,8 +64,9 @@ function envoieCaracteristiquesProduitDsLocalStorage (caracteristiquesProduit)
     btnEnvoiePanier.addEventListener("click", (e) => { 
         e.preventDefault();
         
-        // Creer une variable, qui condiendra les cles et valeures present dans le local storage
+        // Creer une variable, qui contiendra les cles et valeures present dans le local storage
         let produitsPresentsDansLocalStorage = JSON.parse(localStorage.getItem("produit"));
+        console.log(produitsPresentsDansLocalStorage);
         
         let containerCouleurs = document.getElementById("colors");
         
@@ -103,12 +104,6 @@ function envoieCaracteristiquesProduitDsLocalStorage (caracteristiquesProduit)
                     produitsPresentsDansLocalStorage[j].nombre++, 
                     localStorage.setItem("produit", JSON.stringify(produitsPresentsDansLocalStorage)),
                     produitsPresentsDansLocalStorage = JSON.parse(localStorage.getItem("produit"))
-
-                    /*breveCaracteristiquesProduit.nombre = breveCaracteristiquesProduit.nombre + 1;
-                    
-                    produitsPresentsDansLocalStorage.push(breveCaracteristiquesProduit);
-                    localStorage.setItem("produit", JSON.stringify(produitsPresentsDansLocalStorage));*/
-    
                 } else {
                     console.log('6');
                     produitsPresentsDansLocalStorage.push(breveCaracteristiquesProduit);
@@ -116,7 +111,6 @@ function envoieCaracteristiquesProduitDsLocalStorage (caracteristiquesProduit)
                     console.log('7');
                 }
             }
-            
         }
     });
 }
