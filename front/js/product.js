@@ -116,10 +116,7 @@ function envoieCaracteristiquesProduitDsLocalStorage (caracteristiquesProduit)
                     console.log('7');
                 }
             }
+            
         }
     });
 }
-
-
-
-
