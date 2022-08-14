@@ -64,11 +64,15 @@ api();
     let prixTotal = 0;
 
     for (i = 0; i < produitsPresentsDansLocalStorage.length; i++) {
+        console.log(produitsPresentsDansLocalStorage[i].idProduit);
+        console.log(produitsPresentsDansLocalStorage[i].couleurProduit);
+        console.log(produitsPresentsDansLocalStorage[i].nombre);
         
         // CHERCHER LES DONNES DS "caracteristiquesProduit" ET LES COMPARER AVEC "produitsPresentsDansLocalStorage"
         for (j = 0; j < caracteristiquesProduit.length; j++) {
-            if (caracteristiquesProduit[j]._id === produitsPresentsDansLocalStorage[i].idProduit)
-
+            
+            
+            if (caracteristiquesProduit[j]._id === produitsPresentsDansLocalStorage[i].idProduit) {
                 structureProduitPanier = structureProduitPanier + `
                 <article class="cart__item" data-id="${produitsPresentsDansLocalStorage[i].idProduit}" data-color="${produitsPresentsDansLocalStorage[i].couleurProduit}">
                     <div class="cart__item__img">
@@ -82,8 +86,8 @@ api();
                         </div>
                         <div class="cart__item__content__settings">
                             <div class="cart__item__content__settings__quantity">
-                                <p>Qté : ${produitsPresentsDansLocalStorage[i].nombre}</p>
-                                <input type="number" class="itemQuantity" name="itemQuantity" min="1" max="100" value="42">
+                                <p>Qté : </p>
+                                <input type="number" class="itemQuantity" name="itemQuantity" min="1" max="100" value="${produitsPresentsDansLocalStorage[i].nombre}">
                             </div>
                             <div class="cart__item__content__settings__delete">
                                 <p class="deleteItem">Supprimer</p>
@@ -92,20 +96,28 @@ api();
                     </div>
                 </article>`
     
-            /*if (produitsPresentsDansLocalStorage[i].idProduit ===  && produitsPresentsDansLocalStorage[i].couleurProduit === ) {
-                produitsPresentsDansLocalStorage[i].nombre = produitsPresentsDansLocalStorage[i].nombre + 1;
-            } // Je le compart a quoi ? (C'est claire ds ma tete mais pas ds le code !)*/
-    
-            // Total 
-            prixTotal = prixTotal + produitsPresentsDansLocalStorage[i].prixProduit;
-            containerTotalPrice.innerHTML = prixTotal;
+                // Prix total 
+                prixTotal = prixTotal + caracteristiquesProduit[j].price;
+                //console.log(`${caracteristiquesProduit[j].price}`);
+                containerTotalPrice.innerHTML = prixTotal;
+                //console.log(prixTotal);
+
+                // Nombre total d'article 
+
+            }
                 
         }
     }
-
     if (i == produitsPresentsDansLocalStorage.length) {
+
+        //console.log("Condition de la boucle", produitsPresentsDansLocalStorage.length);
+
         container.innerHTML = structureProduitPanier;
-        containerTotalQuantity.innerHTML = i;
+        
+        nombreArticlePanier = produitsPresentsDansLocalStorage.nombre[i] ++;
+        //console.log("Nombre de produit ds le penier", produitsPresentsDansLocalStorage);
+
+        containerTotalQuantity.innerHTML = nombreArticlePanier; 
         //containerTotalPrice.innerHTML = 
     
      }
