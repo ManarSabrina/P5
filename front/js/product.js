@@ -67,20 +67,22 @@ function envoieCaracteristiquesProduitDsLocalStorage (caracteristiquesProduit)
         
         // Creer une variable, qui contiendra les cles et valeures present dans le local storage
         let produitsPresentsDansLocalStorage = JSON.parse(localStorage.getItem("produit"));
-        console.log(localStorage.getItem("produit"));
-        console.log(produitsPresentsDansLocalStorage);
         
         let containerCouleurs = document.getElementById("colors");
-        let containerNombrePageProduit = document.getElementsByClassName("item__content__settings__quantity")[0].getElementsByTagName("input")[0];
-        console.log(containerNombrePageProduit[0]);
+
+        let containerNombrePageProduit = document.getElementById("quantity");
+  
+        let NombrePageProduit = containerNombrePageProduit.value;
+        
         
         //Recuperation des qq caracteristiques produits 
         let breveCaracteristiquesProduit = {
         idProduit: caracteristiquesProduit._id,
         couleurProduit: `${containerCouleurs.value}`, 
-        nombre: `${containerNombrePageProduit.value}`
+        nombre: NombrePageProduit
         };
         
+        breveCaracteristiquesProduit.nombre
         // ?!
 
         // Si il n'y a pas de produit
@@ -96,14 +98,15 @@ function envoieCaracteristiquesProduitDsLocalStorage (caracteristiquesProduit)
                 // Condistions de comparaison
                 if (breveCaracteristiquesProduit.idProduit === produitsPresentsDansLocalStorage[j].idProduit && breveCaracteristiquesProduit.couleurProduit === produitsPresentsDansLocalStorage[j].couleurProduit ) 
                 {
-                    produitsPresentsDansLocalStorage[j].nombre++, 
-                    localStorage.setItem("produit", JSON.stringify(produitsPresentsDansLocalStorage)),
-                    produitsPresentsDansLocalStorage = JSON.parse(localStorage.getItem("produit"))
-                } else {
-                    produitsPresentsDansLocalStorage.push(breveCaracteristiquesProduit);
-                    localStorage.setItem("produit", JSON.stringify(produitsPresentsDansLocalStorage));
+                    // Augmentation du nombre dans "produitsPresentsDansLocalStorage".
+                    produitsPresentsDansLocalStorage[j].nombre = parseInt(produitsPresentsDansLocalStorage[j].nombre) + parseInt(NombrePageProduit);
+                    
                 }
             }
+            // Mettre "breveCaracteristiquesProduit", ds le local storage. 
+            produitsPresentsDansLocalStorage.push(breveCaracteristiquesProduit);
+            // Mettre "produitsPresentsDansLocalStorage", dans local storage. 
+            localStorage.setItem("produit", JSON.stringify(produitsPresentsDansLocalStorage));
         }
     });
 }
