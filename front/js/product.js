@@ -93,20 +93,24 @@ function envoieCaracteristiquesProduitDsLocalStorage (caracteristiquesProduit)
         } 
         // Si il y a des produits dans le local storage
         else {
-            // Parcourir le local storage pour voir si le produit qu'on souhaite rajouter ne s'y trouve pas deja.
-            for (let j = 0; j < produitsPresentsDansLocalStorage.length; j++) {
-                // Condistions de comparaison
-                if (breveCaracteristiquesProduit.idProduit === produitsPresentsDansLocalStorage[j].idProduit && breveCaracteristiquesProduit.couleurProduit === produitsPresentsDansLocalStorage[j].couleurProduit ) 
-                {
-                    // Augmentation du nombre dans "produitsPresentsDansLocalStorage".
-                    produitsPresentsDansLocalStorage[j].nombre = parseInt(produitsPresentsDansLocalStorage[j].nombre) + parseInt(NombrePageProduit);
+
+            let produitTrouveDsLeTableau = produitsPresentsDansLocalStorage.find (canap => canap.idProduit === breveCaracteristiquesProduit.idProduit && canap.couleurProduit === breveCaracteristiquesProduit.couleurProduit)
+
+            let positionProduitTrouveDsLeTableau = produitsPresentsDansLocalStorage.indexOf(produitTrouveDsLeTableau);
+
+            // Condistions de comparaison
+            if (produitTrouveDsLeTableau) 
+            {
+                // Augmentation du nombre dans "produitsPresentsDansLocalStorage".
+                console.log(produitsPresentsDansLocalStorage[positionProduitTrouveDsLeTableau].nombre);
+                produitsPresentsDansLocalStorage[positionProduitTrouveDsLeTableau].nombre = parseInt(produitsPresentsDansLocalStorage[positionProduitTrouveDsLeTableau].nombre) + parseInt(NombrePageProduit);
                     
-                }
-            }
-            // Mettre "breveCaracteristiquesProduit", ds le local storage. 
-            produitsPresentsDansLocalStorage.push(breveCaracteristiquesProduit);
-            // Mettre "produitsPresentsDansLocalStorage", dans local storage. 
-            localStorage.setItem("produit", JSON.stringify(produitsPresentsDansLocalStorage));
+            } else {
+                // Mettre "breveCaracteristiquesProduit", ds le local storage. 
+                produitsPresentsDansLocalStorage.push(breveCaracteristiquesProduit);
+                // Mettre "produitsPresentsDansLocalStorage", dans local storage. 
+                localStorage.setItem("produit", JSON.stringify(produitsPresentsDansLocalStorage));
+            }    
         }
     });
 }

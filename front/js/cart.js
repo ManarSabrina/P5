@@ -22,35 +22,32 @@ api();
 // Creer une variable, qui condiendra les cles et valeures present dans le local storage
  let produitsPresentsDansLocalStorage = JSON.parse(localStorage.getItem("produit"));
 
-// SUPPRESSION DE PRODUITS DS LE PANIER 
- let resteDesProductsApresSupp = [];
 
- const suppressionDeProduit = async (affichageProduitsPanier) => 
- {
-     await affichageProduitsPanier;
- 
-     let corbeilles = document.querySelectorAll(".deleteItem");
-     let article = document.querySelector(".cart__item");
-     corbeilles.forEach((corbeille) => {
-         corbeille.addEventListener("click", () => {
-             if (produitsPresentsDansLocalStorage.length == 1) {
-                 return (
-                     localStorage.removeItem("produit") 
-                 );
-             }
-             else {
-                 resteDesProductsApresSupp = produitsPresentsDansLocalStorage.filter(e => {
-                     if(article.dataset.data-id != e.idProduit || article.dataset.data-color != e.couleurProduit) {
-                        corbeille.closest(':not(div)');
-                         // .id et .color ?
-                         return true
-                     }
-                 });
-                 localStorage.setItem("produit", JSON.stringify(resteDesProductsApresSupp));
-             }
-         });
-     });
- };
+ // SUPPRETION DE PRODUITS DANS LE PANIER 
+function  suppressionDeProduit () {
+    console.log("Hello");
+
+    // Recuperation des corbeilles 
+    let corbeilles = document. querySelectorAll(".deleteItem")
+
+    for(k = 0; k < corbeilles.length; k++) {
+        // Au clic supprimer l'article 
+        corbeilles[k].addEventListener("click", (event) => { 
+            event.preventDefault();
+            console.log("Hello");
+            // Selection de l'id du produit qui va etre supp. 
+            let idProduitSupp = produitsPresentsDansLocalStorage[k].idProduit;
+
+            let couleurProduitSupp = produitsPresentsDansLocalStorage[k].couleurProduit;
+
+            produitsPresentsDansLocalStorage = produitsPresentsDansLocalStorage.filter(el => el.idProduit !== idProduitSupp && el.couleurProduit !== couleurProduitSupp);
+            console.log("Hello");
+            // Js > JSON, et l'envoyer ds la clé "produit" du local storage. 
+            localStorage.setItem("produit", JSON.stringify(produitsPresentsDansLocalStorage));
+        });
+    }
+}
+                     
 
 
 // AFFICHER LES PRODUITS DANS LE PANIER
