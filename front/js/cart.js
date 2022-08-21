@@ -16,7 +16,7 @@ function api() {
             // Une erreur est survenue
         });
 }
-api();
+api(); 
 
 
 // Creer une variable, qui condiendra les cles et valeures present dans le local storage
