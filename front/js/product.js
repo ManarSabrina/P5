@@ -101,16 +101,21 @@ function envoieCaracteristiquesProduitDsLocalStorage (caracteristiquesProduit)
             // Condistions de comparaison
             if (produitTrouveDsLeTableau) 
             {
+                console.log("Je rsuis entrée");
                 // Augmentation du nombre dans "produitsPresentsDansLocalStorage".
                 console.log(produitsPresentsDansLocalStorage[positionProduitTrouveDsLeTableau].nombre);
+                console.log(NombrePageProduit);
+
                 produitsPresentsDansLocalStorage[positionProduitTrouveDsLeTableau].nombre = parseInt(produitsPresentsDansLocalStorage[positionProduitTrouveDsLeTableau].nombre) + parseInt(NombrePageProduit);
+
+                console.log(produitsPresentsDansLocalStorage[positionProduitTrouveDsLeTableau].nombre);
                     
             } else {
                 // Mettre "breveCaracteristiquesProduit", ds le local storage. 
                 produitsPresentsDansLocalStorage.push(breveCaracteristiquesProduit);
                 // Mettre "produitsPresentsDansLocalStorage", dans local storage. 
-                localStorage.setItem("produit", JSON.stringify(produitsPresentsDansLocalStorage));
             }    
+            localStorage.setItem("produit", JSON.stringify(produitsPresentsDansLocalStorage));
         }
     });
 }
