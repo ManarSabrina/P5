@@ -101,12 +101,13 @@ function envoieCaracteristiquesProduitDsLocalStorage (caracteristiquesProduit)
             // Condistions de comparaison
             if (produitTrouveDsLeTableau) 
             {
-                console.log("Je rsuis entrée");
                 // Augmentation du nombre dans "produitsPresentsDansLocalStorage".
                 console.log(produitsPresentsDansLocalStorage[positionProduitTrouveDsLeTableau].nombre);
                 console.log(NombrePageProduit);
 
                 produitsPresentsDansLocalStorage[positionProduitTrouveDsLeTableau].nombre = parseInt(produitsPresentsDansLocalStorage[positionProduitTrouveDsLeTableau].nombre) + parseInt(NombrePageProduit);
+
+                produitsPresentsDansLocalStorage[positionProduitTrouveDsLeTableau].nombre = string(produitsPresentsDansLocalStorage[positionProduitTrouveDsLeTableau].nombre);
 
                 console.log(produitsPresentsDansLocalStorage[positionProduitTrouveDsLeTableau].nombre);
                     

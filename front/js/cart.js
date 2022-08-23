@@ -117,10 +117,13 @@ function evolutionQuantiteProduit() {
     let containerQuantiteProduit = document.getElementsByClassName("itemQuantity");
 
     for (let m = 0; m < containerQuantiteProduit.length; m++) {
-        console.log("Je suis entree");
+        console.log(containerQuantiteProduit);
+        //-----PROBLEM-----
+        
         // Au clic la quantité de l'article evolue. 
-        containerQuantiteProduit[m].addEventListener("click", (event) => {
+        containerQuantiteProduit[m].value.addEventListener("click", (event) => {
             event.preventDefault();
+            console.log(containerQuantiteProduit[m]);
 
             // Selection de la balise article. 
             const article = containerQuantiteProduit[m].closest("article.cart__item");
@@ -132,10 +135,16 @@ function evolutionQuantiteProduit() {
             const couleurArticle = article.getAttribute("data-color");
 
 
-            for (n = 0; n < produitsPresentsDansLocalStorage.length; n++)
-                if (produitsPresentsDansLocalStorage[n].idProduit === idArticle && produitsPresentsDansLocalStorage[n].couleurProduit === couleurArticle)
+            for (n = 0; n < produitsPresentsDansLocalStorage.length; n++) {
+                if (produitsPresentsDansLocalStorage[n].idProduit === idArticle && produitsPresentsDansLocalStorage[n].couleurProduit === couleurArticle) 
+                {
+                    console.log("Je suis dedans");
                     produitsPresentsDansLocalStorage[n].nombre = containerQuantiteProduit[m].value;
 
+                    console.log(produitsPresentsDansLocalStorage[n].nombre);
+                }
+                    
+            }
             // Js > JSON, et l'envoyer ds la clé "produit" du local storage. 
             localStorage.setItem("produit", JSON.stringify(produitsPresentsDansLocalStorage));
         });
@@ -214,11 +223,9 @@ function analyseeEtRecupererLesDonneesDuFormulaire (){
         function controleDeLAdresse() {
             if(/^[A-Za-z0-9\s]{5,50}$/.test(adressePersonne)){
                 return true;
-                console.log("true")
             } else {
                 alert("Veuillez rensegner correctement votre adresse postale.\nL'adresse ne doit contenir que des lettres et des chiffres.");
                 return false;
-                console.log("false")
             };
         };
 
@@ -244,6 +251,8 @@ function analyseeEtRecupererLesDonneesDuFormulaire (){
 
         // Envoie des informations de la personnes et de sa commande au serveur. 
         const products = produitsPresentsDansLocalStorage;
+        console.log(contact);
+        console.log(products);
 
         const objetAEnvoyerVersLeServeur = {
             contact,
@@ -260,7 +269,6 @@ function analyseeEtRecupererLesDonneesDuFormulaire (){
                 "Content-Type" : "application/json",
             },
         });
-
         console.log(promise1);
 
         // Voir le resultat du serveur ds la console 
