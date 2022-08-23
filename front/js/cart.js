@@ -16,7 +16,7 @@ function api() {
             // Une erreur est survenue
         });
 }
-api(); 
+api();
 
 
 // Creer une variable, qui condiendra les cles et valeures present dans le local storage
@@ -152,9 +152,7 @@ function analyseeEtRecupererLesDonneesDuFormulaire (){
         event.preventDefault();
 
         // Recuperation des donnees du formulaire. 
-        let rensegementsPersonne = JSON.parse(localStorage.getItem("contact")); 
-
-        rensegementsPersonne = [];
+        let rensegementsPersonne = JSON.parse(localStorage.getItem("contact"));
 
         let prenomPersonne = document.querySelector("#firstName").value;
         let nomPersonne = document.querySelector("#lastName").value;
@@ -162,12 +160,12 @@ function analyseeEtRecupererLesDonneesDuFormulaire (){
         let villePersonne = document.querySelector("#city").value;
         let emailPersonne = document.querySelector("#email").value;
 
-        let personne = {
-            prenom : prenomPersonne,
-            nom : nomPersonne,
-            adresse : adressePersonne,
-            ville : villePersonne,
-            email: emailPersonne
+        let contact = {
+            firstName : `${prenomPersonne}`,
+            lastName : `${nomPersonne}`,
+            address : `${adressePersonne}`,
+            city : `${villePersonne}`,
+            email: `${emailPersonne}`
         };
 
         // Controle du formulaire. 
@@ -225,44 +223,66 @@ function analyseeEtRecupererLesDonneesDuFormulaire (){
         };
 
         // Email
-        function controleDuMail() {
+        /*function controleDuMail() {
             if(/^[a-zA-Z0-9.-]+@[a-zA-Z0-9.-]+$/.test(adressePersonne)){
                 return true;
             } else {
                 alert("Veuillez rensegner correctement votre email");
                 return false;
             };
-        };
+        };*/
         
         // Formulaire en entier. 
-        if(controleDuPrenom() && controleDuNom() && controleDeLaVille() && controleDeLAdresse() && controleDuMail()){
+        if(controleDuPrenom() && controleDuNom() && controleDeLaVille() && controleDeLAdresse() /*&& controleDuMail()*/){
             // Mettre et enregistrement ds le local storage. 
-            rensegementsPersonne.push(personne);
-            localStorage.setItem("contact", JSON.stringify(rensegementsPersonne));
+            
+            localStorage.setItem("contact", JSON.stringify(contact));
 
         } else {
             return false;
         };
 
-        // Envoie des informations de la personnes et de sa commende au serveur. 
-        const infoPersonneEtinfoCommende = {
-            produitsPresentsDansLocalStorage,
-            rensegementsPersonne
+        // Envoie des informations de la personnes et de sa commande au serveur. 
+        const products = produitsPresentsDansLocalStorage;
+
+        const objetAEnvoyerVersLeServeur = {
+            contact,
+            products
         };
 
-        //Envoie de l'objet ds le serveur 
-        const aEnvoyerAuServeur = fetch(`http://localhost:3000/api/products/${id}`, {
+        console.log(objetAEnvoyerVersLeServeur);
+
+        //Envoie de l'objet vers le serveur 
+        const promise1 = fetch("http://localhost:3000/api/products/order", {
             method: "POST",
-            body: JSON.stringify(infoPersonneEtinfoCommende),
+            body: JSON.stringify(objetAEnvoyerVersLeServeur),
             headers: {
                 "Content-Type" : "application/json",
-            }
+            },
         });
 
-        // Voir le resultat du serveur ds le console 
-        infoPersonneEtinfoCommende.then(async(response)=>{
+        console.log(promise1);
+
+        // Voir le resultat du serveur ds la console 
+        promise1.then(async(response)=>{
             try{
-                const contenu = await response.json();
+                console.log(response);
+                const contenuDeLaReponse = await response.json();
+                console.log(contenuDeLaReponse);
+                const idCommande = contenuDeLaReponse.id;
+                console.log(idCommande);
+            }catch(e){
+                console.log(e)
+            }
+        })
+        
+        // Voire se qu'il se passe ds le serveur
+        const promise2 = fetch("http://localhost:3000/api/products/order")
+        promise2.then(async(response)=>{
+            try{
+                console.log(promise2);
+                const donneeSurServeur = await response.json();
+                console.log(donneeSurServeur);
             }catch(e){
                 console.log(e)
             }
