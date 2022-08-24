@@ -116,12 +116,15 @@ function evolutionQuantiteProduit() {
 
     let containerQuantiteProduit = document.getElementsByClassName("itemQuantity");
 
-    for (let m = 0; m < containerQuantiteProduit.length; m++) {
-        console.log(containerQuantiteProduit);
+    console.log(containerQuantiteProduit);
+
+    for (let m = 0; m < containerQuantiteProduit.length; m++) 
+    {
+        console.log("Hello");
         //-----PROBLEM-----
         
         // Au clic la quantité de l'article evolue. 
-        containerQuantiteProduit[m].value.addEventListener("click", (event) => {
+        containerQuantiteProduit[m].addEventListener("click", (event) => {
             event.preventDefault();
             console.log(containerQuantiteProduit[m]);
 
@@ -153,7 +156,14 @@ function evolutionQuantiteProduit() {
 
 evolutionQuantiteProduit();
 
-function analyseeEtRecupererLesDonneesDuFormulaire (){
+function analyseeEtRecupererLesDonneesDuFormulaire (){ 
+    // Recuperation de id, des articles. 
+    let products = [];
+    for (let p = 0; p < produitsPresentsDansLocalStorage.length; p++) {
+        products.push(produitsPresentsDansLocalStorage[p].idProduit);
+    }
+    console.log(products);
+
     // Recuperation des donnees du formulaire, lors du clic du bouton du formulaire. 
     const btnFormulaire = document.querySelector("#order");
 
@@ -249,11 +259,6 @@ function analyseeEtRecupererLesDonneesDuFormulaire (){
             return false;
         };
 
-        // Envoie des informations de la personnes et de sa commande au serveur. 
-        const products = produitsPresentsDansLocalStorage;
-        console.log(contact);
-        console.log(products);
-
         const objetAEnvoyerVersLeServeur = {
             contact,
             products
@@ -271,26 +276,27 @@ function analyseeEtRecupererLesDonneesDuFormulaire (){
         });
         console.log(promise1);
 
+        let idCommande = "";
+
         // Voir le resultat du serveur ds la console 
         promise1.then(async(response)=>{
             try{
                 console.log(response);
+
                 const contenuDeLaReponse = await response.json();
                 console.log(contenuDeLaReponse);
-                const idCommande = contenuDeLaReponse.id;
+
+                idCommande = contenuDeLaReponse.orderId;
                 console.log(idCommande);
-            }catch(e){
-                console.log(e)
-            }
-        })
-        
-        // Voire se qu'il se passe ds le serveur
-        const promise2 = fetch("http://localhost:3000/api/products/order")
-        promise2.then(async(response)=>{
-            try{
-                console.log(promise2);
-                const donneeSurServeur = await response.json();
-                console.log(donneeSurServeur);
+
+                // Redirection page confirmation.
+                if (response.ok) {
+                    location.href=`./confirmation.html?id=${idCommande}`;
+                }
+                else {
+                    alert(`Probleme avec le serveur : erreur ${response.status}`)
+                };
+                
             }catch(e){
                 console.log(e)
             }

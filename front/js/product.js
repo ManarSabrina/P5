@@ -107,7 +107,7 @@ function envoieCaracteristiquesProduitDsLocalStorage (caracteristiquesProduit)
 
                 produitsPresentsDansLocalStorage[positionProduitTrouveDsLeTableau].nombre = parseInt(produitsPresentsDansLocalStorage[positionProduitTrouveDsLeTableau].nombre) + parseInt(NombrePageProduit);
 
-                produitsPresentsDansLocalStorage[positionProduitTrouveDsLeTableau].nombre = string(produitsPresentsDansLocalStorage[positionProduitTrouveDsLeTableau].nombre);
+                produitsPresentsDansLocalStorage[positionProduitTrouveDsLeTableau].nombre = `${produitsPresentsDansLocalStorage[positionProduitTrouveDsLeTableau].nombre}`;
 
                 console.log(produitsPresentsDansLocalStorage[positionProduitTrouveDsLeTableau].nombre);
                     
